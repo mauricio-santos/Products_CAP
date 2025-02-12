@@ -37,8 +37,8 @@ entity Products {
         ReleaseDate      : DateTime;
         DiscontinuedDate : DateTime;
         Price            : Decimal(16, 2);
-        Height           : Decimal(16, 2);
-        Width            : Decimal(16, 2);
+        Height           : type of Price;
+        Width            : SalesData:Revenue;
         Depth            : Decimal(16, 2);
         Quantity         : Decimal(16, 2);
 };
