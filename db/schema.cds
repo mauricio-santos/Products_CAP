@@ -54,10 +54,10 @@ type Address {
 
 entity Products {
     key ID               : UUID;
-        Name             : String;
+        Name             : String; //default 'NoName';
         Description      : String;
         ImageUrl         : String;
-        ReleaseDate      : DateTime;
+        ReleaseDate      : DateTime default $now;
         DiscontinuedDate : DateTime;
         Price            : Decimal(16, 2);
         Height           : type of Price;
