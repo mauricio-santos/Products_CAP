@@ -66,17 +66,23 @@ type Address {
 // };
 
 entity Products {
-    key ID               : UUID;
-        Name             : String not null; //default 'NoName';
-        Description      : String;
-        ImageUrl         : String;
-        ReleaseDate      : DateTime default $now;
-        DiscontinuedDate : DateTime;
-        Price            : Decimal(16, 2);
-        Height           : type of Price;
-        Width            : SalesData:Revenue;
-        Depth            : Decimal(16, 2);
-        Quantity         : Decimal(16, 2);
+    key ID                 : UUID;
+        Name               : String not null; //default 'NoName';
+        Description        : String;
+        ImageUrl           : String;
+        ReleaseDate        : DateTime default $now;
+        DiscontinuedDate   : DateTime;
+        Price              : Decimal(16, 2);
+        Height             : type of Price;
+        Width              : SalesData:Revenue;
+        Depth              : Decimal(16, 2);
+        Quantity           : Decimal(16, 2);
+        Supplier_Id        : UUID;
+        ToSupplier         : Association to one Suppliers
+                                 on ToSupplier.ID = Supplier_Id; //Associação não administrada. Necessário inserir os critérios manualmente
+        UnitsOfMeasures_Id : String(2);
+        ToUnitsOfMeasures  : Association to one UnitsOfMeasures
+                                 on ToUnitsOfMeasures.ID = UnitsOfMeasures_Id;
 };
 
 entity Suppliers {
@@ -132,21 +138,21 @@ entity SalesData {
 };
 
 // ------ VISTAS E PROJEÇÕES ------
-entity SelectProductsAll1                as select from Products;
+entity SelectProductsAll1       as select from Products;
 
-entity SelectProductsAll2                as
+entity SelectProductsAll2       as
     select from Products {
         *
     };
 
-entity SelectProductsSimple              as
+entity SelectProductsSimple     as
     select from Products {
         Name,
         Price,
         Quantity
     };
 
-entity SelectProductsJoin                as
+entity SelectProductsJoin       as
     select from Products
     left join ProductReview
         on Products.Name = ProductReview.Name
@@ -162,14 +168,14 @@ entity SelectProductsJoin                as
         Rating;
 
 // PROJECTIONS NÃO SUPORTA JOIN.
-entity ProjectionProductsAll             as projection on Products;
+entity ProjectionProductsAll    as projection on Products;
 
-entity ProjectionProductsAll2            as
+entity ProjectionProductsAll2   as
     projection on Products {
         *
     };
 
-entity ProjectionProductsSimple          as
+entity ProjectionProductsSimple as
     select from Products {
         Name,
         ReleaseDate
@@ -191,6 +197,6 @@ entity ProjectionProductsSimple          as
 
 // EXTENSÃO DE ENTIDADES
 extend Products with {
-    PriceCondition: String(2);
-    PriceDetermination: String(3);
+    PriceCondition     : String(2);
+    PriceDetermination : String(3);
 };
