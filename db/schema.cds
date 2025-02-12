@@ -130,3 +130,33 @@ entity SalesData {
         DeliveryDate : DateTime;
         Revenue      : Decimal(16, 2);
 };
+
+// ------ VISTAS E PROJEÇÕES ------
+entity SelectProductsAll1   as select from Products;
+
+entity SelectProductsAll2   as
+    select from Products {
+        *
+    };
+
+entity SelectProductsSimple as
+    select from Products {
+        Name,
+        Price,
+        Quantity
+    };
+
+entity SelectProductsJoin   as
+    select from Products
+    left join ProductReview
+        on Products.Name = ProductReview.Name
+    {
+        Products.Name,
+        Rating,
+        sum(Price) as TotalPrice
+    }
+    group by
+        Products.Name,
+        Rating
+    order by
+        Rating;
