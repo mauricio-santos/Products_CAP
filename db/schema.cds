@@ -1,6 +1,7 @@
 namespace de.santos;
 
-type CustomType         : String(50); //não recomendado. Utilizar tipos padrões do CDL
+// ----- TIPO PERSONALIZADOS -----
+// type CustomType : String(50); //não recomendado. Utilizar tipos padrões do CDL
 
 type Address {
     Street     : String;
@@ -10,6 +11,7 @@ type Address {
     Country    : String(3);
 };
 
+// ----- TIPO ARRAY -----
 // type EmailsAddresses_01 : array of { //"array of" pode ser substituido por "many"
 //     kind  : String;
 //     email : String;
@@ -28,6 +30,27 @@ type Address {
 //         email : String;
 //     };
 // }
+
+// ----- ENUMERAÇÕES -----
+// type Gender     : String enum {
+//     Male;
+//     Female;
+// };
+
+// entity Order {
+//     ClientGender : Gender;
+//     Status       : Integer enum {
+//         Submitted  = 1;
+//         Fullfiller = 2;
+//         Shipped    = 3;
+//         Cancel     = -1
+//     };
+//     Priority     : String @assert.range enum { // @assert.range é uma anotação que define um intervalo de valores
+//         Height;
+//         Medium;
+//         Low;
+//     }
+// };
 
 entity Products {
     key ID               : UUID;
