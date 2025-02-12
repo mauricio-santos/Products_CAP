@@ -132,21 +132,21 @@ entity SalesData {
 };
 
 // ------ VISTAS E PROJEÇÕES ------
-entity SelectProductsAll1   as select from Products;
+entity SelectProductsAll1     as select from Products;
 
-entity SelectProductsAll2   as
+entity SelectProductsAll2     as
     select from Products {
         *
     };
 
-entity SelectProductsSimple as
+entity SelectProductsSimple   as
     select from Products {
         Name,
         Price,
         Quantity
     };
 
-entity SelectProductsJoin   as
+entity SelectProductsJoin     as
     select from Products
     left join ProductReview
         on Products.Name = ProductReview.Name
@@ -160,3 +160,17 @@ entity SelectProductsJoin   as
         Rating
     order by
         Rating;
+
+// PROJECTIONS NÃO SUPORTA JOIN.
+entity ProjectionProductsAll  as projection on Products;
+
+entity ProjectionProductsAll2 as
+    projection on Products {
+        *
+    };
+
+entity ProjectionProductsSimple   as
+    select from Products {
+        Name,
+        ReleaseDate
+    };
