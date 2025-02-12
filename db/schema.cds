@@ -1,6 +1,6 @@
 namespace de.santos;
 
-type CustomType : String(50); //não recomendado. Utilizar tipos padrões do CDL
+type CustomType         : String(50); //não recomendado. Utilizar tipos padrões do CDL
 
 type Address {
     Street     : String;
@@ -10,6 +10,24 @@ type Address {
     Country    : String(3);
 };
 
+// type EmailsAddresses_01 : array of { //"array of" pode ser substituido por "many"
+//     kind  : String;
+//     email : String;
+// };
+
+// type EmailsAddresses_02 {
+//     kind  : String;
+//     email : String;
+// };
+
+// entity Emails { //Em DB tem o typo NCLOB
+//     email_01 :      EmailsAddresses_01; // Declarando array ja declarado
+//     email_02 : many EmailsAddresses_02; //Declarando Array utilizando um tipo personalizado
+//     email_03 : many { //Declarando o array diretamente na entidade
+//         kind  : String;
+//         email : String;
+//     };
+// }
 
 entity Products {
     key ID               : UUID;
