@@ -1,6 +1,15 @@
 namespace de.santos;
 
-type CustomType: String(50); //não recomendado. Utilizar tipos padrões do CDL
+type CustomType : String(50); //não recomendado. Utilizar tipos padrões do CDL
+
+type Address {
+    Street     : String;
+    City       : String;
+    State      : String(2);
+    PostalCode : String(5);
+    Country    : String(3);
+};
+
 
 entity Products {
     key ID               : UUID;
@@ -16,17 +25,13 @@ entity Products {
         Quantity         : Decimal(16, 2);
 };
 
-entity Supplier {
-    key ID         : UUID;
-        Name       : String;
-        Street     : String;
-        City       : String;
-        State      : String(2);
-        PostalCode : String(5);
-        Country    : String(3);
-        Email      : String;
-        Phone      : String;
-        Fax        : String;
+entity Suppliers {
+    key ID      : UUID;
+        Name    : String;
+        Address : Address;
+        Email   : String;
+        Phone   : String;
+        Fax     : String;
 };
 
 entity Categories {
