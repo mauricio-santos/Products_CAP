@@ -11,8 +11,8 @@ CREATE TABLE de_santos_Products (
   Width DECIMAL(16, 2),
   Depth DECIMAL(16, 2),
   Quantity DECIMAL(16, 2),
-  Supplier_Id NVARCHAR(36),
-  UnitsOfMeasures_Id NVARCHAR(2),
+  Supplier_ID NVARCHAR(36),
+  UnitsOfMeasures_ID NVARCHAR(2),
   PriceCondition NVARCHAR(2),
   PriceDetermination NVARCHAR(3),
   PRIMARY KEY(ID)
@@ -95,8 +95,8 @@ CREATE VIEW de_santos_SelectProductsAll1 AS SELECT
   Products_0.Width,
   Products_0.Depth,
   Products_0.Quantity,
-  Products_0.Supplier_Id,
-  Products_0.UnitsOfMeasures_Id,
+  Products_0.Supplier_ID,
+  Products_0.UnitsOfMeasures_ID,
   Products_0.PriceCondition,
   Products_0.PriceDetermination
 FROM de_santos_Products AS Products_0;
@@ -113,8 +113,8 @@ CREATE VIEW de_santos_SelectProductsAll2 AS SELECT
   Products_0.Width,
   Products_0.Depth,
   Products_0.Quantity,
-  Products_0.Supplier_Id,
-  Products_0.UnitsOfMeasures_Id,
+  Products_0.Supplier_ID,
+  Products_0.UnitsOfMeasures_ID,
   Products_0.PriceCondition,
   Products_0.PriceDetermination
 FROM de_santos_Products AS Products_0;
@@ -145,8 +145,8 @@ CREATE VIEW de_santos_ProjectionProductsAll AS SELECT
   Products_0.Width,
   Products_0.Depth,
   Products_0.Quantity,
-  Products_0.Supplier_Id,
-  Products_0.UnitsOfMeasures_Id,
+  Products_0.Supplier_ID,
+  Products_0.UnitsOfMeasures_ID,
   Products_0.PriceCondition,
   Products_0.PriceDetermination
 FROM de_santos_Products AS Products_0;
@@ -163,8 +163,8 @@ CREATE VIEW de_santos_ProjectionProductsAll2 AS SELECT
   Products_0.Width,
   Products_0.Depth,
   Products_0.Quantity,
-  Products_0.Supplier_Id,
-  Products_0.UnitsOfMeasures_Id,
+  Products_0.Supplier_ID,
+  Products_0.UnitsOfMeasures_ID,
   Products_0.PriceCondition,
   Products_0.PriceDetermination
 FROM de_santos_Products AS Products_0;

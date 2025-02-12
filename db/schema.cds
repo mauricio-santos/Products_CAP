@@ -66,23 +66,22 @@ type Address {
 // };
 
 entity Products {
-    key ID                 : UUID;
-        Name               : String not null; //default 'NoName';
-        Description        : String;
-        ImageUrl           : String;
-        ReleaseDate        : DateTime default $now;
-        DiscontinuedDate   : DateTime;
-        Price              : Decimal(16, 2);
-        Height             : type of Price;
-        Width              : SalesData:Revenue;
-        Depth              : Decimal(16, 2);
-        Quantity           : Decimal(16, 2);
-        Supplier_Id        : UUID;
-        ToSupplier         : Association to one Suppliers
-                                 on ToSupplier.ID = Supplier_Id; //Associação não administrada. Necessário inserir os critérios manualmente
-        UnitsOfMeasures_Id : String(2);
-        ToUnitsOfMeasures  : Association to one UnitsOfMeasures
-                                 on ToUnitsOfMeasures.ID = UnitsOfMeasures_Id;
+    key ID               : UUID;
+        Name             : String not null; //default 'NoName';
+        Description      : String;
+        ImageUrl         : String;
+        ReleaseDate      : DateTime default $now;
+        DiscontinuedDate : DateTime;
+        Price            : Decimal(16, 2);
+        Height           : type of Price;
+        Width            : SalesData:Revenue;
+        Depth            : Decimal(16, 2);
+        Quantity         : Decimal(16, 2);
+        Supplier         : Association to one Suppliers;
+        UnitsOfMeasures  : Association to UnitsOfMeasures; //o uso do "one" é opcional
+        Currency         : Association to Currencies;
+        DimensionUnit    : Association to DimensionsUnits;
+        Category         : Association to Categories;
 };
 
 entity Suppliers {
@@ -126,15 +125,20 @@ entity Months {
 };
 
 entity ProductReview {
-    key Name    : String;
+    key ID      : UUID;
+        Name    : String;
         Rating  : String;
         Comment : String;
+        Product : Association to Products;
 };
 
 entity SalesData {
-    key ID           : UUID;
-        DeliveryDate : DateTime;
-        Revenue      : Decimal(16, 2);
+    key ID            : UUID;
+        DeliveryDate  : DateTime;
+        Revenue       : Decimal(16, 2);
+        Product       : Association to Products;
+        Currency      : Association to Currencies;
+        DeliveryMonth : Association to Months;
 };
 
 // ------ VISTAS E PROJEÇÕES ------
