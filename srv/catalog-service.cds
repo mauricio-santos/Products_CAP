@@ -1,0 +1,6 @@
+using { de.santos as santos } from '../db/schema';
+
+
+service CatalogService {
+    entity Products_SRV as projection on santos.Products;
+};
