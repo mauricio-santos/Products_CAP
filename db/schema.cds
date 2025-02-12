@@ -1,5 +1,7 @@
 namespace de.santos;
 
+type CustomType: String(50); //não recomendado. Utilizar tipos padrões do CDL
+
 entity Products {
     key ID               : UUID;
         Name             : String;
