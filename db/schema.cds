@@ -52,6 +52,19 @@ type Address {
 //     }
 // };
 
+// ----- ELEMENTOS VIRTUAIS -----
+// entity Cars {
+//     key ID                 : UUID;
+//         Name               : String;
+//         // ativa o Core.Computed no XML, fazendo que o este atributo seja somente leitura
+//         virtual Discount_1 : Decimal; // <Annotation Term="Core.Computed" Bool="false"/>
+
+//         @Core.Computed: false // Ativa a escrita dos dados
+//         virtual Discount_2 : Decimal; //<Annotation Term="Core.Computed" Bool="true"/>
+
+// // Valor padrão quando não tem o atributo virtual: <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+// };
+
 entity Products {
     key ID               : UUID;
         Name             : String not null; //default 'NoName';
