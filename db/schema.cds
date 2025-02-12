@@ -82,6 +82,10 @@ entity Products {
         Currency         : Association to Currencies;
         DimensionUnit    : Association to DimensionsUnits;
         Category         : Association to Categories;
+        SalesData        : Association to many SalesData
+                               on SalesData.Product = $self;
+        Reviews          : Association to many ProductReview
+                               on Reviews.Product = $self;
 };
 
 entity Suppliers {
@@ -91,6 +95,8 @@ entity Suppliers {
         Email   : String;
         Phone   : String;
         Fax     : String;
+        Product : Association to many Products
+                      on Product.Supplier = $self;
 };
 
 entity Categories {

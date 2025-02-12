@@ -13,6 +13,9 @@ CREATE TABLE de_santos_Products (
   Quantity DECIMAL(16, 2),
   Supplier_ID NVARCHAR(36),
   UnitsOfMeasures_ID NVARCHAR(2),
+  Currency_ID NVARCHAR(3),
+  DimensionUnit_ID NVARCHAR(2),
+  Category_ID NVARCHAR(1),
   PriceCondition NVARCHAR(2),
   PriceDetermination NVARCHAR(3),
   PRIMARY KEY(ID)
@@ -70,16 +73,21 @@ CREATE TABLE de_santos_Months (
 );
 
 CREATE TABLE de_santos_ProductReview (
-  Name NVARCHAR(255) NOT NULL,
+  ID NVARCHAR(36) NOT NULL,
+  Name NVARCHAR(255),
   Rating NVARCHAR(255),
   Comment NVARCHAR(255),
-  PRIMARY KEY(Name)
+  Product_ID NVARCHAR(36),
+  PRIMARY KEY(ID)
 );
 
 CREATE TABLE de_santos_SalesData (
   ID NVARCHAR(36) NOT NULL,
   DeliveryDate DATETIME_TEXT,
   Revenue DECIMAL(16, 2),
+  Product_ID NVARCHAR(36),
+  Currency_ID NVARCHAR(3),
+  DeliveryMonth_ID NVARCHAR(2),
   PRIMARY KEY(ID)
 );
 
@@ -97,6 +105,9 @@ CREATE VIEW de_santos_SelectProductsAll1 AS SELECT
   Products_0.Quantity,
   Products_0.Supplier_ID,
   Products_0.UnitsOfMeasures_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
   Products_0.PriceCondition,
   Products_0.PriceDetermination
 FROM de_santos_Products AS Products_0;
@@ -115,6 +126,9 @@ CREATE VIEW de_santos_SelectProductsAll2 AS SELECT
   Products_0.Quantity,
   Products_0.Supplier_ID,
   Products_0.UnitsOfMeasures_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
   Products_0.PriceCondition,
   Products_0.PriceDetermination
 FROM de_santos_Products AS Products_0;
@@ -147,6 +161,9 @@ CREATE VIEW de_santos_ProjectionProductsAll AS SELECT
   Products_0.Quantity,
   Products_0.Supplier_ID,
   Products_0.UnitsOfMeasures_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
   Products_0.PriceCondition,
   Products_0.PriceDetermination
 FROM de_santos_Products AS Products_0;
@@ -165,6 +182,9 @@ CREATE VIEW de_santos_ProjectionProductsAll2 AS SELECT
   Products_0.Quantity,
   Products_0.Supplier_ID,
   Products_0.UnitsOfMeasures_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
   Products_0.PriceCondition,
   Products_0.PriceDetermination
 FROM de_santos_Products AS Products_0;
