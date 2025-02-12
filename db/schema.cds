@@ -188,3 +188,9 @@ entity ProjectionProductsSimple          as
 // entity ProjParamProducts(pName : String) as projection on Products
 //                                             where
 //                                                 Name = :pName;
+
+// EXTENSÃO DE ENTIDADES
+extend Products with {
+    PriceCondition: String(2);
+    PriceDetermination: String(3);
+};
