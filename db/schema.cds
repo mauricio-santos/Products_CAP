@@ -210,3 +210,27 @@ extend Products with {
     PriceCondition     : String(2);
     PriceDetermination : String(3);
 };
+
+// ASSOCIAÇÃO Many to Many
+
+//Muitos-para-Muitos não pode ser representado diretamente em algumas linguagens de modelagem de dados,
+//então é necessário usar uma entidade intermediária (StudentCourse).
+
+entity Course { // um curso pode ter vários registros na tabela intermediária StudentCourse.
+    ID      : UUID;
+    Student : Association to many StudentCourse
+                  on Student.Course = $self;
+
+};
+
+entity Student { // um estudante pode ter múltiplos registros na tabela intermediária.
+    ID     : UUID;
+    Course : Association to many StudentCourse
+                 on Course.Student = $self;
+};
+
+entity StudentCourse { // Esta entidade representa a associação muitos-para-muitos entre Student e Course
+    ID      : UUID;
+    Course  : Association to Course;
+    Student : Association to Student;
+};
