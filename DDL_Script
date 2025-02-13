@@ -16,7 +16,7 @@ CREATE TABLE de_santos_Products (
   Depth DECIMAL(16, 2),
   Quantity DECIMAL(16, 2),
   Supplier_ID NVARCHAR(36),
-  UnitsOfMeasures_ID NVARCHAR(2),
+  UnitOfMeasure_ID NVARCHAR(2),
   Currency_ID NVARCHAR(3),
   DimensionUnit_ID NVARCHAR(2),
   Category_ID NVARCHAR(1),
@@ -27,6 +27,10 @@ CREATE TABLE de_santos_Products (
 
 CREATE TABLE de_santos_Suppliers (
   ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP_TEXT,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP_TEXT,
+  modifiedBy NVARCHAR(255),
   Name NVARCHAR(255),
   Address_Street NVARCHAR(255),
   Address_City NVARCHAR(255),
@@ -41,13 +45,18 @@ CREATE TABLE de_santos_Suppliers (
 
 CREATE TABLE de_santos_Categories (
   ID NVARCHAR(1) NOT NULL,
-  name NVARCHAR(255),
+  createdAt TIMESTAMP_TEXT,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP_TEXT,
+  modifiedBy NVARCHAR(255),
+  Name NVARCHAR(255),
   PRIMARY KEY(ID)
 );
 
 CREATE TABLE de_santos_StockAvailability (
   ID INTEGER NOT NULL,
   Description NVARCHAR(255),
+  Product_ID NVARCHAR(36),
   PRIMARY KEY(ID)
 );
 
@@ -78,6 +87,10 @@ CREATE TABLE de_santos_Months (
 
 CREATE TABLE de_santos_ProductReview (
   ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP_TEXT,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP_TEXT,
+  modifiedBy NVARCHAR(255),
   Name NVARCHAR(255),
   Rating NVARCHAR(255),
   Comment NVARCHAR(255),
@@ -87,6 +100,10 @@ CREATE TABLE de_santos_ProductReview (
 
 CREATE TABLE de_santos_SalesData (
   ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP_TEXT,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP_TEXT,
+  modifiedBy NVARCHAR(255),
   DeliveryDate DATETIME_TEXT,
   Revenue DECIMAL(16, 2),
   Product_ID NVARCHAR(36),
@@ -127,6 +144,57 @@ CREATE TABLE de_santos_OrderItems (
   PRIMARY KEY(ID)
 );
 
+CREATE TABLE de_santos_Products_texts (
+  locale NVARCHAR(14) NOT NULL,
+  ID NVARCHAR(36) NOT NULL,
+  Name NVARCHAR(255) NOT NULL,
+  Description NVARCHAR(255),
+  PRIMARY KEY(locale, ID)
+);
+
+CREATE TABLE de_santos_Categories_texts (
+  locale NVARCHAR(14) NOT NULL,
+  ID NVARCHAR(1) NOT NULL,
+  Name NVARCHAR(255),
+  PRIMARY KEY(locale, ID)
+);
+
+CREATE TABLE de_santos_StockAvailability_texts (
+  locale NVARCHAR(14) NOT NULL,
+  ID INTEGER NOT NULL,
+  Description NVARCHAR(255),
+  PRIMARY KEY(locale, ID)
+);
+
+CREATE TABLE de_santos_Currencies_texts (
+  locale NVARCHAR(14) NOT NULL,
+  ID NVARCHAR(3) NOT NULL,
+  Description NVARCHAR(255),
+  PRIMARY KEY(locale, ID)
+);
+
+CREATE TABLE de_santos_UnitsOfMeasures_texts (
+  locale NVARCHAR(14) NOT NULL,
+  ID NVARCHAR(2) NOT NULL,
+  Description NVARCHAR(255),
+  PRIMARY KEY(locale, ID)
+);
+
+CREATE TABLE de_santos_DimensionsUnits_texts (
+  locale NVARCHAR(14) NOT NULL,
+  ID NVARCHAR(2) NOT NULL,
+  Description NVARCHAR(255),
+  PRIMARY KEY(locale, ID)
+);
+
+CREATE TABLE de_santos_Months_texts (
+  locale NVARCHAR(14) NOT NULL,
+  ID NVARCHAR(2) NOT NULL,
+  Description NVARCHAR(255),
+  ShortDescription NVARCHAR(3),
+  PRIMARY KEY(locale, ID)
+);
+
 CREATE VIEW de_santos_SelectProductsAll1 AS SELECT
   Products_0.ID,
   Products_0.createdAt,
@@ -144,7 +212,7 @@ CREATE VIEW de_santos_SelectProductsAll1 AS SELECT
   Products_0.Depth,
   Products_0.Quantity,
   Products_0.Supplier_ID,
-  Products_0.UnitsOfMeasures_ID,
+  Products_0.UnitOfMeasure_ID,
   Products_0.Currency_ID,
   Products_0.DimensionUnit_ID,
   Products_0.Category_ID,
@@ -169,7 +237,7 @@ CREATE VIEW de_santos_SelectProductsAll2 AS SELECT
   Products_0.Depth,
   Products_0.Quantity,
   Products_0.Supplier_ID,
-  Products_0.UnitsOfMeasures_ID,
+  Products_0.UnitOfMeasure_ID,
   Products_0.Currency_ID,
   Products_0.DimensionUnit_ID,
   Products_0.Category_ID,
@@ -208,7 +276,7 @@ CREATE VIEW de_santos_ProjectionProductsAll AS SELECT
   Products_0.Depth,
   Products_0.Quantity,
   Products_0.Supplier_ID,
-  Products_0.UnitsOfMeasures_ID,
+  Products_0.UnitOfMeasure_ID,
   Products_0.Currency_ID,
   Products_0.DimensionUnit_ID,
   Products_0.Category_ID,
@@ -233,7 +301,7 @@ CREATE VIEW de_santos_ProjectionProductsAll2 AS SELECT
   Products_0.Depth,
   Products_0.Quantity,
   Products_0.Supplier_ID,
-  Products_0.UnitsOfMeasures_ID,
+  Products_0.UnitOfMeasure_ID,
   Products_0.Currency_ID,
   Products_0.DimensionUnit_ID,
   Products_0.Category_ID,
@@ -245,4 +313,184 @@ CREATE VIEW de_santos_ProjectionProductsSimple AS SELECT
   Products_0.Name,
   Products_0.ReleaseDate
 FROM de_santos_Products AS Products_0;
+
+CREATE VIEW localized_de_santos_Products AS SELECT
+  L_0.ID,
+  L_0.createdAt,
+  L_0.createdBy,
+  L_0.modifiedAt,
+  L_0.modifiedBy,
+  coalesce(localized_1.Name, L_0.Name) AS Name,
+  coalesce(localized_1.Description, L_0.Description) AS Description,
+  L_0.ImageUrl,
+  L_0.ReleaseDate,
+  L_0.DiscontinuedDate,
+  L_0.Price,
+  L_0.Height,
+  L_0.Width,
+  L_0.Depth,
+  L_0.Quantity,
+  L_0.Supplier_ID,
+  L_0.UnitOfMeasure_ID,
+  L_0.Currency_ID,
+  L_0.DimensionUnit_ID,
+  L_0.Category_ID,
+  L_0.PriceCondition,
+  L_0.PriceDetermination
+FROM (de_santos_Products AS L_0 LEFT JOIN de_santos_Products_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+
+CREATE VIEW localized_de_santos_Categories AS SELECT
+  L_0.ID,
+  L_0.createdAt,
+  L_0.createdBy,
+  L_0.modifiedAt,
+  L_0.modifiedBy,
+  coalesce(localized_1.Name, L_0.Name) AS Name
+FROM (de_santos_Categories AS L_0 LEFT JOIN de_santos_Categories_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+
+CREATE VIEW localized_de_santos_StockAvailability AS SELECT
+  L_0.ID,
+  coalesce(localized_1.Description, L_0.Description) AS Description,
+  L_0.Product_ID
+FROM (de_santos_StockAvailability AS L_0 LEFT JOIN de_santos_StockAvailability_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+
+CREATE VIEW localized_de_santos_Currencies AS SELECT
+  L_0.ID,
+  coalesce(localized_1.Description, L_0.Description) AS Description
+FROM (de_santos_Currencies AS L_0 LEFT JOIN de_santos_Currencies_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+
+CREATE VIEW localized_de_santos_UnitsOfMeasures AS SELECT
+  L_0.ID,
+  coalesce(localized_1.Description, L_0.Description) AS Description
+FROM (de_santos_UnitsOfMeasures AS L_0 LEFT JOIN de_santos_UnitsOfMeasures_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+
+CREATE VIEW localized_de_santos_DimensionsUnits AS SELECT
+  L_0.ID,
+  coalesce(localized_1.Description, L_0.Description) AS Description
+FROM (de_santos_DimensionsUnits AS L_0 LEFT JOIN de_santos_DimensionsUnits_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+
+CREATE VIEW localized_de_santos_Months AS SELECT
+  L_0.ID,
+  coalesce(localized_1.Description, L_0.Description) AS Description,
+  coalesce(localized_1.ShortDescription, L_0.ShortDescription) AS ShortDescription
+FROM (de_santos_Months AS L_0 LEFT JOIN de_santos_Months_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+
+CREATE VIEW localized_de_santos_SelectProductsAll1 AS SELECT
+  Products_0.ID,
+  Products_0.createdAt,
+  Products_0.createdBy,
+  Products_0.modifiedAt,
+  Products_0.modifiedBy,
+  Products_0.Name,
+  Products_0.Description,
+  Products_0.ImageUrl,
+  Products_0.ReleaseDate,
+  Products_0.DiscontinuedDate,
+  Products_0.Price,
+  Products_0.Height,
+  Products_0.Width,
+  Products_0.Depth,
+  Products_0.Quantity,
+  Products_0.Supplier_ID,
+  Products_0.UnitOfMeasure_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
+  Products_0.PriceCondition,
+  Products_0.PriceDetermination
+FROM localized_de_santos_Products AS Products_0;
+
+CREATE VIEW localized_de_santos_SelectProductsAll2 AS SELECT
+  Products_0.ID,
+  Products_0.createdAt,
+  Products_0.createdBy,
+  Products_0.modifiedAt,
+  Products_0.modifiedBy,
+  Products_0.Name,
+  Products_0.Description,
+  Products_0.ImageUrl,
+  Products_0.ReleaseDate,
+  Products_0.DiscontinuedDate,
+  Products_0.Price,
+  Products_0.Height,
+  Products_0.Width,
+  Products_0.Depth,
+  Products_0.Quantity,
+  Products_0.Supplier_ID,
+  Products_0.UnitOfMeasure_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
+  Products_0.PriceCondition,
+  Products_0.PriceDetermination
+FROM localized_de_santos_Products AS Products_0;
+
+CREATE VIEW localized_de_santos_SelectProductsSimple AS SELECT
+  Products_0.Name,
+  Products_0.Price,
+  Products_0.Quantity
+FROM localized_de_santos_Products AS Products_0;
+
+CREATE VIEW localized_de_santos_SelectProductsJoin AS SELECT
+  Products_0.Name,
+  ProductReview_1.Rating,
+  sum(Products_0.Price) AS TotalPrice
+FROM (localized_de_santos_Products AS Products_0 LEFT JOIN de_santos_ProductReview AS ProductReview_1 ON Products_0.Name = ProductReview_1.Name)
+GROUP BY Products_0.Name, ProductReview_1.Rating
+ORDER BY Rating;
+
+CREATE VIEW localized_de_santos_ProjectionProductsAll AS SELECT
+  Products_0.ID,
+  Products_0.createdAt,
+  Products_0.createdBy,
+  Products_0.modifiedAt,
+  Products_0.modifiedBy,
+  Products_0.Name,
+  Products_0.Description,
+  Products_0.ImageUrl,
+  Products_0.ReleaseDate,
+  Products_0.DiscontinuedDate,
+  Products_0.Price,
+  Products_0.Height,
+  Products_0.Width,
+  Products_0.Depth,
+  Products_0.Quantity,
+  Products_0.Supplier_ID,
+  Products_0.UnitOfMeasure_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
+  Products_0.PriceCondition,
+  Products_0.PriceDetermination
+FROM localized_de_santos_Products AS Products_0;
+
+CREATE VIEW localized_de_santos_ProjectionProductsAll2 AS SELECT
+  Products_0.ID,
+  Products_0.createdAt,
+  Products_0.createdBy,
+  Products_0.modifiedAt,
+  Products_0.modifiedBy,
+  Products_0.Name,
+  Products_0.Description,
+  Products_0.ImageUrl,
+  Products_0.ReleaseDate,
+  Products_0.DiscontinuedDate,
+  Products_0.Price,
+  Products_0.Height,
+  Products_0.Width,
+  Products_0.Depth,
+  Products_0.Quantity,
+  Products_0.Supplier_ID,
+  Products_0.UnitOfMeasure_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
+  Products_0.PriceCondition,
+  Products_0.PriceDetermination
+FROM localized_de_santos_Products AS Products_0;
+
+CREATE VIEW localized_de_santos_ProjectionProductsSimple AS SELECT
+  Products_0.Name,
+  Products_0.ReleaseDate
+FROM localized_de_santos_Products AS Products_0;
 

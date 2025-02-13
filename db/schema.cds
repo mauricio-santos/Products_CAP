@@ -72,8 +72,8 @@ type Address {
 // };
 
 entity Products : cuid, managed {
-    Name             : String not null; //default 'NoName';
-    Description      : String;
+    Name             : localized String not null; //default 'NoName';
+    Description      : localized String;
     ImageUrl         : String;
     ReleaseDate      : DateTime default $now;
     DiscontinuedDate : DateTime;
@@ -105,33 +105,34 @@ entity Suppliers : cuid, managed {
 
 entity Categories : cuid, managed {
     key ID   : String(1);
-        name : String;
+        Name : localized String;
 };
 
 entity StockAvailability : cuid {
     key ID          : Integer;
-        Description : String;
+        Description : localized String;
+        Product     : Association to Products;
 };
 
 entity Currencies : cuid {
     key ID          : String(3);
-        Description : String;
+        Description : localized String;
 };
 
 entity UnitsOfMeasures {
     key ID          : String(2);
-        Description : String;
+        Description : localized String;
 };
 
 entity DimensionsUnits {
     key ID          : String(2);
-        Description : String;
+        Description : localized String;
 };
 
 entity Months {
     key ID               : String(2);
-        Description      : String;
-        ShortDescription : String(3);
+        Description      : localized String;
+        ShortDescription : localized String(3);
 };
 
 entity ProductReview : cuid, managed {
