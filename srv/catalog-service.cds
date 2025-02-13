@@ -21,26 +21,27 @@ service CatalogService {
     entity Products          as
         select from santos.materials.Products {
             ID,
-            Name          as ProductName,
-            Description,
+            Name          as ProductName     @mandatory, //Obrigatório
+            Description                      @mandatory,
             ImageUrl,
             ReleaseDate,
             DiscontinuedDate,
-            Price,
+            Price                            @mandatory,
             Height,
             Width,
             Depth,
             Quantity,
-            UnitOfMeasure as ToUnitOfMeasure,
-            Currency      as ToCurrency,
-            Category      as ToCategory,
-            Category.Name as Category,
+            UnitOfMeasure as ToUnitOfMeasure @mandatory,
+            Currency      as ToCurrency      @mandatory,
+            Category      as ToCategory      @mandatory,
+            Category.Name as Category        @readonly,
             DimensionUnit as ToDimensionUnit,
             SalesData,
             Supplier,
             Reviews
         };
 
+    @readonly
     entity Supplier          as
         select from santos.sales.Suppliers {
             ID,
@@ -61,6 +62,7 @@ service CatalogService {
             Product as ToProduct
         };
 
+    @readonly //Somente leitura (GET)
     entity SalesData         as
         select from santos.sales.SalesData {
             ID,
@@ -72,6 +74,7 @@ service CatalogService {
             Product                   as ToProduct
         };
 
+    @readonly
     entity StockAvailability as
         select from santos.materials.StockAvailability {
             ID,
@@ -79,24 +82,28 @@ service CatalogService {
             Product as ToProduct
         };
 
+    @readonly
     entity VH_Categories     as
         select from santos.materials.Categories {
             ID   as Code,
             Name as Text
         };
 
+    @readonly
     entity VH_Currencies     as
         select from santos.materials.Currencies {
             ID          as Code,
             Description as Text
         };
 
+    @readonly
     entity VH_UnitOfMeasure  as
         select from santos.materials.UnitOfMeasures {
             ID          as Code,
             Description as Text
         };
 
+    @readonly
     entity VH_DimensionUnits as
         select from santos.materials.DimensionUnits {
             ID          as Code,
