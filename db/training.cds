@@ -1,9 +1,26 @@
 namespace training;
 
+// ASSOCIAÇÃO Many to Many
+entity Course : cuid { // um curso pode ter vários registros na tabela intermediária StudentCourse.
+    Student : Association to many StudentCourse
+                  on Student.Course = $self;
+
+};
+
+entity Student : cuid { // um estudante pode ter múltiplos registros na tabela intermediária.
+    Course : Association to many StudentCourse
+                 on Course.Student = $self;
+};
+
+entity StudentCourse : cuid { // Esta entidade representa a associação muitos-para-muitos entre Student e Course
+    Course  : Association to Course;
+    Student : Association to Student;
+};
+
 // ----- TIPO PERSONALIZADOS -----
 type CustomType         : String(50); //não recomendado. Utilizar tipos padrões do CDL
 
------TIPO array - ----
+//-----TIPO array - ----
 type EmailsAddresses_01 : array of { //"array of" pode ser substituido por "many"
     kind  : String;
     email : String;
@@ -23,7 +40,7 @@ entity Emails { //Em DB tem o typo NCLOB
     };
 }
 
------ENUMERAÇÕES - ----
+//-----ENUMERAÇÕES - ----
 
 type Gender             : String enum {
     Male;
@@ -57,27 +74,6 @@ entity Cars {
 
 // Valor padrão quando não tem o atributo virtual: <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
 };
-
-// ASSOCIAÇÃO Many to Many
-
-//Muitos-para-Muitos não pode ser representado diretamente em algumas linguagens de modelagem de dados,
-//então é necessário usar uma entidade intermediária (StudentCourse).
-
-// entity Course : cuid { // um curso pode ter vários registros na tabela intermediária StudentCourse.
-//     Student : Association to many StudentCourse
-//                   on Student.Course = $self;
-
-// };
-
-// entity Student : cuid { // um estudante pode ter múltiplos registros na tabela intermediária.
-//     Course : Association to many StudentCourse
-//                  on Course.Student = $self;
-// };
-
-// entity StudentCourse : cuid { // Esta entidade representa a associação muitos-para-muitos entre Student e Course
-//     Course  : Association to Course;
-//     Student : Association to Student;
-// };
 
 // ENTIDADE COM PARÂMETROS - Não funciona com SQL, somente em HANA DB
 // entity ParameterProducts(pName : String) as
