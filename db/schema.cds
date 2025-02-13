@@ -234,3 +234,26 @@ entity StudentCourse { // Esta entidade representa a associação muitos-para-mu
     Course  : Association to Course;
     Student : Association to Student;
 };
+
+// COMPOSIÇÃO - Relação Todo-Parte
+// Ao remover Orders, o OrdeItems também será eliminado.
+entity Orders {
+    key ID       : UUID;
+        Date     : DateTime;
+        Customer : String;
+        Item     : Composition of many OrderItems
+                       on Item.Order = $self;
+        // Item     : Composition of many { //Forma direta
+        //                key Position : Integer;
+        //                    Order    : Association to Orders;
+        //                    Product  : Association to Products;
+        //                    Quantity : Integer;
+        //            };
+};
+
+entity OrderItems {
+    key ID       : UUID;
+        Order    : Association to Orders;
+        Product  : Association to Products;
+        Quantity : Integer;
+};
