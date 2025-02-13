@@ -1,4 +1,8 @@
-namespace training;
+namespace de.training;
+
+using {
+    cuid, //automatically filled in
+} from '@sap/cds/common';
 
 // ASSOCIAÇÃO Many to Many
 entity Course : cuid { // um curso pode ter vários registros na tabela intermediária StudentCourse.

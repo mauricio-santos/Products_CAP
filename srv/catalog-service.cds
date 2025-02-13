@@ -1,4 +1,5 @@
 using {de.santos as santos} from '../db/schema';
+using { de.training as training} from '../db/training';
 
 service CatalogService {
     entity Products          as projection on santos.materials.Products;
