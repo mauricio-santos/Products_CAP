@@ -5,10 +5,6 @@ using {
     managed //Aspect to capture changes by user and name
 } from '@sap/cds/common';
 
-
-// ----- TIPO PERSONALIZADOS -----
-// type CustomType : String(50); //não recomendado. Utilizar tipos padrões do CDL
-
 type Address {
     Street     : String;
     City       : String;
@@ -16,60 +12,6 @@ type Address {
     PostalCode : String(5);
     Country    : String(3);
 };
-
-// ----- TIPO ARRAY -----
-// type EmailsAddresses_01 : array of { //"array of" pode ser substituido por "many"
-//     kind  : String;
-//     email : String;
-// };
-
-// type EmailsAddresses_02 {
-//     kind  : String;
-//     email : String;
-// };
-
-// entity Emails { //Em DB tem o typo NCLOB
-//     email_01 :      EmailsAddresses_01; // Declarando array ja declarado
-//     email_02 : many EmailsAddresses_02; //Declarando Array utilizando um tipo personalizado
-//     email_03 : many { //Declarando o array diretamente na entidade
-//         kind  : String;
-//         email : String;
-//     };
-// }
-
-// ----- ENUMERAÇÕES -----
-// type Gender     : String enum {
-//     Male;
-//     Female;
-// };
-
-// entity Order {
-//     ClientGender : Gender;
-//     Status       : Integer enum {
-//         Submitted  = 1;
-//         Fullfiller = 2;
-//         Shipped    = 3;
-//         Cancel     = -1
-//     };
-//     Priority     : String @assert.range enum { // @assert.range é uma anotação que define um intervalo de valores
-//         Height;
-//         Medium;
-//         Low;
-//     }
-// };
-
-// ----- ELEMENTOS VIRTUAIS -----
-// entity Cars {
-//     key ID                 : UUID;
-//         Name               : String;
-//         // ativa o Core.Computed no XML, fazendo que o este atributo seja somente leitura
-//         virtual Discount_1 : Decimal; // <Annotation Term="Core.Computed" Bool="false"/>
-
-//         @Core.Computed: false // Ativa a escrita dos dados
-//         virtual Discount_2 : Decimal; //<Annotation Term="Core.Computed" Bool="true"/>
-
-// // Valor padrão quando não tem o atributo virtual: <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
-// };
 
 entity Products : cuid, managed {
     Name             : localized String not null; //default 'NoName';
@@ -194,45 +136,10 @@ entity ProjectionProductsSimple as
         ReleaseDate
     };
 
-// ENTIDADE COM PARÂMETROS - Não funciona com SQL, somente em HANA DB
-// entity ParameterProducts(pName : String) as
-//     select from Products {
-//         Name,
-//         Price,
-//         Quantity
-//     }
-//     where
-//         Name = :pName; //chamando o parâmetro
-
-// entity ProjParamProducts(pName : String) as projection on Products
-//                                             where
-//                                                 Name = :pName;
-
 // EXTENSÃO DE ENTIDADES
 extend Products with {
     PriceCondition     : String(2);
     PriceDetermination : String(3);
-};
-
-// ASSOCIAÇÃO Many to Many
-
-//Muitos-para-Muitos não pode ser representado diretamente em algumas linguagens de modelagem de dados,
-//então é necessário usar uma entidade intermediária (StudentCourse).
-
-entity Course : cuid { // um curso pode ter vários registros na tabela intermediária StudentCourse.
-    Student : Association to many StudentCourse
-                  on Student.Course = $self;
-
-};
-
-entity Student : cuid { // um estudante pode ter múltiplos registros na tabela intermediária.
-    Course : Association to many StudentCourse
-                 on Course.Student = $self;
-};
-
-entity StudentCourse : cuid { // Esta entidade representa a associação muitos-para-muitos entre Student e Course
-    Course  : Association to Course;
-    Student : Association to Student;
 };
 
 // COMPOSIÇÃO - Relação Todo-Parte
@@ -242,12 +149,6 @@ entity Orders : cuid {
     Customer : String;
     Item     : Composition of many OrderItems
                    on Item.Order = $self;
-// Item     : Composition of many { //Forma direta
-//                key Position : Integer;
-//                    Order    : Association to Orders;
-//                    Product  : Association to Products;
-//                    Quantity : Integer;
-//            };
 };
 
 entity OrderItems : cuid {
