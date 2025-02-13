@@ -1,5 +1,8 @@
 namespace de.santos;
 
+using {cuid} from '@sap/cds/common'; //automatically filled in
+
+
 // ----- TIPO PERSONALIZADOS -----
 // type CustomType : String(50); //não recomendado. Utilizar tipos padrões do CDL
 
@@ -65,51 +68,50 @@ type Address {
 // // Valor padrão quando não tem o atributo virtual: <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
 // };
 
-entity Products {
-    key ID               : UUID;
-        Name             : String not null; //default 'NoName';
-        Description      : String;
-        ImageUrl         : String;
-        ReleaseDate      : DateTime default $now;
-        DiscontinuedDate : DateTime;
-        Price            : Decimal(16, 2);
-        Height           : type of Price;
-        Width            : SalesData:Revenue;
-        Depth            : Decimal(16, 2);
-        Quantity         : Decimal(16, 2);
-        Supplier         : Association to one Suppliers;
-        UnitsOfMeasures  : Association to UnitsOfMeasures; //o uso do "one" é opcional
-        Currency         : Association to Currencies;
-        DimensionUnit    : Association to DimensionsUnits;
-        Category         : Association to Categories;
-        SalesData        : Association to many SalesData
-                               on SalesData.Product = $self;
-        Reviews          : Association to many ProductReview
-                               on Reviews.Product = $self;
+entity Products : cuid {
+    // key ID               : UUID;
+    Name             : String not null; //default 'NoName';
+    Description      : String;
+    ImageUrl         : String;
+    ReleaseDate      : DateTime default $now;
+    DiscontinuedDate : DateTime;
+    Price            : Decimal(16, 2);
+    Height           : type of Price;
+    Width            : SalesData:Revenue;
+    Depth            : Decimal(16, 2);
+    Quantity         : Decimal(16, 2);
+    Supplier         : Association to one Suppliers;
+    UnitsOfMeasures  : Association to UnitsOfMeasures; //o uso do "one" é opcional
+    Currency         : Association to Currencies;
+    DimensionUnit    : Association to DimensionsUnits;
+    Category         : Association to Categories;
+    SalesData        : Association to many SalesData
+                           on SalesData.Product = $self;
+    Reviews          : Association to many ProductReview
+                           on Reviews.Product = $self;
 };
 
-entity Suppliers {
-    key ID      : UUID;
-        Name    : String;
-        Address : Address;
-        Email   : String;
-        Phone   : String;
-        Fax     : String;
-        Product : Association to many Products
-                      on Product.Supplier = $self;
+entity Suppliers : cuid {
+    Name    : String;
+    Address : Address;
+    Email   : String;
+    Phone   : String;
+    Fax     : String;
+    Product : Association to many Products
+                  on Product.Supplier = $self;
 };
 
-entity Categories {
+entity Categories : cuid {
     key ID   : String(1);
         name : String;
 };
 
-entity StockAvailability {
+entity StockAvailability : cuid {
     key ID          : Integer;
         Description : String;
 };
 
-entity Currencies {
+entity Currencies : cuid {
     key ID          : String(3);
         Description : String;
 };
@@ -130,21 +132,19 @@ entity Months {
         ShortDescription : String(3);
 };
 
-entity ProductReview {
-    key ID      : UUID;
-        Name    : String;
-        Rating  : String;
-        Comment : String;
-        Product : Association to Products;
+entity ProductReview : cuid {
+    Name    : String;
+    Rating  : String;
+    Comment : String;
+    Product : Association to Products;
 };
 
-entity SalesData {
-    key ID            : UUID;
-        DeliveryDate  : DateTime;
-        Revenue       : Decimal(16, 2);
-        Product       : Association to Products;
-        Currency      : Association to Currencies;
-        DeliveryMonth : Association to Months;
+entity SalesData : cuid {
+    DeliveryDate  : DateTime;
+    Revenue       : Decimal(16, 2);
+    Product       : Association to Products;
+    Currency      : Association to Currencies;
+    DeliveryMonth : Association to Months;
 };
 
 // ------ VISTAS E PROJEÇÕES ------
@@ -216,44 +216,39 @@ extend Products with {
 //Muitos-para-Muitos não pode ser representado diretamente em algumas linguagens de modelagem de dados,
 //então é necessário usar uma entidade intermediária (StudentCourse).
 
-entity Course { // um curso pode ter vários registros na tabela intermediária StudentCourse.
-    ID      : UUID;
+entity Course : cuid { // um curso pode ter vários registros na tabela intermediária StudentCourse.
     Student : Association to many StudentCourse
                   on Student.Course = $self;
 
 };
 
-entity Student { // um estudante pode ter múltiplos registros na tabela intermediária.
-    ID     : UUID;
+entity Student : cuid { // um estudante pode ter múltiplos registros na tabela intermediária.
     Course : Association to many StudentCourse
                  on Course.Student = $self;
 };
 
-entity StudentCourse { // Esta entidade representa a associação muitos-para-muitos entre Student e Course
-    ID      : UUID;
+entity StudentCourse : cuid { // Esta entidade representa a associação muitos-para-muitos entre Student e Course
     Course  : Association to Course;
     Student : Association to Student;
 };
 
 // COMPOSIÇÃO - Relação Todo-Parte
 // Ao remover Orders, o OrdeItems também será eliminado.
-entity Orders {
-    key ID       : UUID;
-        Date     : DateTime;
-        Customer : String;
-        Item     : Composition of many OrderItems
-                       on Item.Order = $self;
-        // Item     : Composition of many { //Forma direta
-        //                key Position : Integer;
-        //                    Order    : Association to Orders;
-        //                    Product  : Association to Products;
-        //                    Quantity : Integer;
-        //            };
+entity Orders : cuid {
+    Date     : DateTime;
+    Customer : String;
+    Item     : Composition of many OrderItems
+                   on Item.Order = $self;
+// Item     : Composition of many { //Forma direta
+//                key Position : Integer;
+//                    Order    : Association to Orders;
+//                    Product  : Association to Products;
+//                    Quantity : Integer;
+//            };
 };
 
-entity OrderItems {
-    key ID       : UUID;
-        Order    : Association to Orders;
-        Product  : Association to Products;
-        Quantity : Integer;
+entity OrderItems : cuid {
+    Order    : Association to Orders;
+    Product  : Association to Products;
+    Quantity : Integer;
 };
