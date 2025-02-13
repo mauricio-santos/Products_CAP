@@ -1,6 +1,9 @@
 namespace de.santos;
 
-using {cuid} from '@sap/cds/common'; //automatically filled in
+using {
+    cuid, //automatically filled in
+    managed //Aspect to capture changes by user and name
+} from '@sap/cds/common';
 
 
 // ----- TIPO PERSONALIZADOS -----
@@ -68,8 +71,7 @@ type Address {
 // // Valor padrão quando não tem o atributo virtual: <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
 // };
 
-entity Products : cuid {
-    // key ID               : UUID;
+entity Products : cuid, managed {
     Name             : String not null; //default 'NoName';
     Description      : String;
     ImageUrl         : String;
@@ -81,7 +83,7 @@ entity Products : cuid {
     Depth            : Decimal(16, 2);
     Quantity         : Decimal(16, 2);
     Supplier         : Association to one Suppliers;
-    UnitsOfMeasures  : Association to UnitsOfMeasures; //o uso do "one" é opcional
+    UnitOfMeasure    : Association to UnitsOfMeasures; //o uso do "one" é opcional
     Currency         : Association to Currencies;
     DimensionUnit    : Association to DimensionsUnits;
     Category         : Association to Categories;
@@ -91,7 +93,7 @@ entity Products : cuid {
                            on Reviews.Product = $self;
 };
 
-entity Suppliers : cuid {
+entity Suppliers : cuid, managed {
     Name    : String;
     Address : Address;
     Email   : String;
@@ -101,7 +103,7 @@ entity Suppliers : cuid {
                   on Product.Supplier = $self;
 };
 
-entity Categories : cuid {
+entity Categories : cuid, managed {
     key ID   : String(1);
         name : String;
 };
@@ -132,14 +134,14 @@ entity Months {
         ShortDescription : String(3);
 };
 
-entity ProductReview : cuid {
+entity ProductReview : cuid, managed {
     Name    : String;
     Rating  : String;
     Comment : String;
     Product : Association to Products;
 };
 
-entity SalesData : cuid {
+entity SalesData : cuid, managed {
     DeliveryDate  : DateTime;
     Revenue       : Decimal(16, 2);
     Product       : Association to Products;
