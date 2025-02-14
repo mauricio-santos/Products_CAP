@@ -260,6 +260,37 @@ CREATE VIEW CatalogService_VH_DimensionUnits AS SELECT
   DimensionUnits_0.Description AS Text
 FROM de_santos_materials_DimensionUnits AS DimensionUnits_0;
 
+CREATE VIEW MyService_SuppliersProducts AS SELECT
+  Products_0.ID,
+  Products_0.createdAt,
+  Products_0.createdBy,
+  Products_0.modifiedAt,
+  Products_0.modifiedBy,
+  Products_0.Name,
+  Products_0.Description,
+  Products_0.ImageUrl,
+  Products_0.ReleaseDate,
+  Products_0.DiscontinuedDate,
+  Products_0.Price,
+  Products_0.Height,
+  Products_0.Width,
+  Products_0.Depth,
+  Products_0.Quantity,
+  Products_0.Supplier_ID,
+  Products_0.UnitOfMeasure_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
+  Products_0.PriceCondition,
+  Products_0.PriceDetermination,
+  Supplier_1.Address_Street,
+  Supplier_1.Address_City,
+  Supplier_1.Address_State,
+  Supplier_1.Address_PostalCode,
+  Supplier_1.Address_Country
+FROM (de_santos_materials_Products AS Products_0 LEFT JOIN de_santos_sales_Suppliers AS Supplier_1 ON Products_0.Supplier_ID = Supplier_1.ID)
+WHERE (Supplier_1.Address_PostalCode = 98074) AND (Products_0.Name = 'Bread');
+
 CREATE VIEW de_santos_materials_ProjectionProductsAll AS SELECT
   Products_0.ID,
   Products_0.createdAt,
@@ -380,6 +411,13 @@ GROUP BY Products_0.Name, ProductReview_1.Rating
 ORDER BY Rating;
 
 CREATE VIEW CatalogService_Products_texts AS SELECT
+  texts_0.locale,
+  texts_0.ID,
+  texts_0.Name,
+  texts_0.Description
+FROM de_santos_materials_Products_texts AS texts_0;
+
+CREATE VIEW MyService_SuppliersProducts_texts AS SELECT
   texts_0.locale,
   texts_0.ID,
   texts_0.Name,
@@ -511,6 +549,37 @@ CREATE VIEW localized_CatalogService_VH_DimensionUnits AS SELECT
   DimensionUnits_0.ID AS Code,
   DimensionUnits_0.Description AS Text
 FROM localized_de_santos_materials_DimensionUnits AS DimensionUnits_0;
+
+CREATE VIEW localized_MyService_SuppliersProducts AS SELECT
+  Products_0.ID,
+  Products_0.createdAt,
+  Products_0.createdBy,
+  Products_0.modifiedAt,
+  Products_0.modifiedBy,
+  Products_0.Name,
+  Products_0.Description,
+  Products_0.ImageUrl,
+  Products_0.ReleaseDate,
+  Products_0.DiscontinuedDate,
+  Products_0.Price,
+  Products_0.Height,
+  Products_0.Width,
+  Products_0.Depth,
+  Products_0.Quantity,
+  Products_0.Supplier_ID,
+  Products_0.UnitOfMeasure_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
+  Products_0.PriceCondition,
+  Products_0.PriceDetermination,
+  Supplier_1.Address_Street,
+  Supplier_1.Address_City,
+  Supplier_1.Address_State,
+  Supplier_1.Address_PostalCode,
+  Supplier_1.Address_Country
+FROM (localized_de_santos_materials_Products AS Products_0 LEFT JOIN de_santos_sales_Suppliers AS Supplier_1 ON Products_0.Supplier_ID = Supplier_1.ID)
+WHERE (Supplier_1.Address_PostalCode = 98074) AND (Products_0.Name = 'Bread');
 
 CREATE VIEW localized_de_santos_materials_ProjectionProductsAll AS SELECT
   Products_0.ID,

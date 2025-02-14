@@ -111,3 +111,24 @@ service CatalogService {
             Description as Text
         from santos.materials.DimensionUnits;
 };
+
+service MyService {
+    //Aplicando Filtros
+    entity SuppliersProducts as
+        select from santos.materials.Products[Name = 'Bread']{
+            *,
+            Name,
+            Description,
+            Supplier.Address
+        }
+        where
+            Supplier.Address.PostalCode = 98074;
+
+    entity SuppliersToSales  as //Utilizando Postfix para filtrar conteúdos
+        select
+            Supplier.Email,
+            Category.Name,
+            SalesData.Currency.ID,
+            SalesData.Currency.Description
+        from santos.materials.Products;
+};
