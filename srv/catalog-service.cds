@@ -165,5 +165,12 @@ service Reports {
                 Price as             Integer
             )     as Price, //Casting SQL
             Price as PriceInterger : Integer //Casting CDL
-        from santos.materials.Products
+        from santos.materials.Products;
+
+    entity EntitiExists  as
+        select from santos.materials.Products {
+            Name
+        }
+        where
+            exists Supplier[Name = 'Exotic Liquids'];
 };
