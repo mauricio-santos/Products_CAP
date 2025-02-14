@@ -158,4 +158,12 @@ service MyService {
 
 service Reports {
     entity AverageRating as projection on santos.reports.AverageRating;
+
+    entity EntityCasting as
+        select
+            cast(
+                Price as             Integer
+            )     as Price, //Casting SQL
+            Price as PriceInterger : Integer //Casting CDL
+        from santos.materials.Products
 };

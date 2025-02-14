@@ -279,6 +279,11 @@ CREATE VIEW MyService_EntityJoin AS SELECT
 FROM (de_santos_materials_Products AS Products_0 LEFT JOIN de_santos_sales_Suppliers AS supp_1 ON (supp_1.ID = Products_0.Supplier_ID) AND supp_1.Name = 'Exotic Liquids')
 WHERE Products_0.Name = 'Bread';
 
+CREATE VIEW Reports_EntityCasting AS SELECT
+  CAST(Products_0.Price AS INTEGER) AS Price,
+  Products_0.Price AS PriceInterger
+FROM de_santos_materials_Products AS Products_0;
+
 CREATE VIEW de_santos_materials_ProjectionProductsAll AS SELECT
   Products_0.ID,
   Products_0.createdAt,
