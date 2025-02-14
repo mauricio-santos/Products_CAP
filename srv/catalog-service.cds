@@ -20,16 +20,17 @@ service CatalogService {
 
     entity Products          as
         select from santos.materials.Products {
-            ID,
-            Name          as ProductName     @mandatory, //Obrigatório
-            Description                      @mandatory,
-            ImageUrl,
-            ReleaseDate,
-            DiscontinuedDate,
-            Price                            @mandatory,
-            Height,
-            Width,
-            Depth,
+            // ID,
+            // Name          as ProductName     @mandatory, //Obrigatório
+            // Description                      @mandatory,
+            // ImageUrl,
+            // ReleaseDate,
+            // DiscontinuedDate,
+            // Price                            @mandatory,
+            // Height,
+            // Width,
+            // Depth,
+            *, //Todas as colunas anteriores são expostas
             Quantity,
             UnitOfMeasure as ToUnitOfMeasure @mandatory,
             Currency      as ToCurrency      @mandatory,
