@@ -147,3 +147,7 @@ service MyService {
         where
             Products.Name = 'Bread';
 };
+
+Service Reports {
+    entity AverageRating as projection on santos.reports.AverageRating;
+};

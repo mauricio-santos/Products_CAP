@@ -159,3 +159,13 @@ context sales {
         order by
             Rating;
 };
+
+context reports {
+    entity AverageRating as
+        select from santos.materials.ProductReview {
+            Product.ID  as ProductId,
+            avg(Rating) as AverageRating : Decimal(15, 2)
+        }
+        group by
+            Product.ID;
+};
