@@ -104,9 +104,9 @@ service CatalogService {
         };
 
     @readonly
-    entity VH_DimensionUnits as
-        select from santos.materials.DimensionUnits {
+    entity VH_DimensionUnits as //Projeção Postfix
+        select
             ID          as Code,
             Description as Text
-        };
-}
+        from santos.materials.DimensionUnits;
+};
