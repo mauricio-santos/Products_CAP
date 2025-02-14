@@ -297,6 +297,12 @@ FROM (de_santos_materials_Products AS Products_0 LEFT JOIN de_santos_materials_P
 GROUP BY Products_0.Name, ProductReview_1.Rating
 ORDER BY Rating;
 
+CREATE VIEW de_santos_reports_AverageRating AS SELECT
+  ProductReview_0.Product_ID AS ProductId,
+  avg(ProductReview_0.Rating) AS AverageRating
+FROM de_santos_materials_ProductReview AS ProductReview_0
+GROUP BY ProductReview_0.Product_ID;
+
 CREATE VIEW localized_de_santos_materials_Products AS SELECT
   L_0.ID,
   L_0.createdAt,
@@ -357,6 +363,33 @@ CREATE VIEW localized_de_santos_sales_Months AS SELECT
   coalesce(localized_1.Description, L_0.Description) AS Description,
   coalesce(localized_1.ShortDescription, L_0.ShortDescription) AS ShortDescription
 FROM (de_santos_sales_Months AS L_0 LEFT JOIN de_santos_sales_Months_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+
+CREATE VIEW de_santos_reports_Products AS SELECT
+  Products_0.ID,
+  Products_0.createdAt,
+  Products_0.createdBy,
+  Products_0.modifiedAt,
+  Products_0.modifiedBy,
+  Products_0.Name,
+  Products_0.Description,
+  Products_0.ImageUrl,
+  Products_0.ReleaseDate,
+  Products_0.DiscontinuedDate,
+  Products_0.Price,
+  Products_0.Height,
+  Products_0.Width,
+  Products_0.Depth,
+  Products_0.Quantity,
+  Products_0.Supplier_ID,
+  Products_0.UnitOfMeasure_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
+  Products_0.PriceCondition,
+  Products_0.PriceDetermination,
+  ToAverageRating_1.AverageRating AS Rating,
+  CASE WHEN Products_0.Quantity >= 8 THEN 3 WHEN Products_0.Quantity > 0 THEN 2 ELSE 1 END AS StockAvailability
+FROM (de_santos_materials_Products AS Products_0 LEFT JOIN de_santos_reports_AverageRating AS ToAverageRating_1 ON ToAverageRating_1.ProductId = Products_0.ID);
 
 CREATE VIEW localized_de_santos_materials_ProjectionProductsAll AS SELECT
   Products_0.ID,
@@ -476,4 +509,31 @@ CREATE VIEW localized_de_santos_sales_SelectProductsJoin AS SELECT
 FROM (localized_de_santos_materials_Products AS Products_0 LEFT JOIN de_santos_materials_ProductReview AS ProductReview_1 ON Products_0.Name = ProductReview_1.Name)
 GROUP BY Products_0.Name, ProductReview_1.Rating
 ORDER BY Rating;
+
+CREATE VIEW localized_de_santos_reports_Products AS SELECT
+  Products_0.ID,
+  Products_0.createdAt,
+  Products_0.createdBy,
+  Products_0.modifiedAt,
+  Products_0.modifiedBy,
+  Products_0.Name,
+  Products_0.Description,
+  Products_0.ImageUrl,
+  Products_0.ReleaseDate,
+  Products_0.DiscontinuedDate,
+  Products_0.Price,
+  Products_0.Height,
+  Products_0.Width,
+  Products_0.Depth,
+  Products_0.Quantity,
+  Products_0.Supplier_ID,
+  Products_0.UnitOfMeasure_ID,
+  Products_0.Currency_ID,
+  Products_0.DimensionUnit_ID,
+  Products_0.Category_ID,
+  Products_0.PriceCondition,
+  Products_0.PriceDetermination,
+  ToAverageRating_1.AverageRating AS Rating,
+  CASE WHEN Products_0.Quantity >= 8 THEN 3 WHEN Products_0.Quantity > 0 THEN 2 ELSE 1 END AS StockAvailability
+FROM (localized_de_santos_materials_Products AS Products_0 LEFT JOIN de_santos_reports_AverageRating AS ToAverageRating_1 ON ToAverageRating_1.ProductId = Products_0.ID);
 

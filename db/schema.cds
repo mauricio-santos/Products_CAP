@@ -168,4 +168,30 @@ context reports {
         }
         group by
             Product.ID;
+
+    entity Products      as
+        select from santos.materials.Products
+        mixin { //Permite adicionar associações não administradas
+            ToStockAvailibility : Association to santos.materials.StockAvailability
+                                      on ToStockAvailibility.ID = $projection.StockAvailability;
+            ToAverageRating     : Association to AverageRating
+                                      on ToAverageRating.ProductId = ID;
+        }
+        into {
+            *, //Todos os atibutos de Products
+            ToStockAvailibility,
+            ToAverageRating.AverageRating as Rating,
+            case
+                when
+                    Quantity >= 8
+                then
+                    3
+                when
+                    Quantity > 0
+                then
+                    2
+                else
+                    1
+            end                           as StockAvailability : Integer
+        }
 };

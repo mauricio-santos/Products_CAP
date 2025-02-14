@@ -19,19 +19,24 @@ using {de.santos as santos} from '../db/schema';
 service CatalogService {
 
     entity Products          as
-        select from santos.materials.Products {
-            // ID,
-            // Name          as ProductName     @mandatory, //Obrigatório
-            // Description                      @mandatory,
-            // ImageUrl,
-            // ReleaseDate,
-            // DiscontinuedDate,
-            // Price                            @mandatory,
-            // Height,
-            // Width,
-            // Depth,
-            *, //Todas as colunas anteriores são expostas
-            Quantity,
+        select from santos.reports.Products {
+            ID,
+            Name          as ProductName     @mandatory, //Obrigatório
+            Description                      @mandatory,
+            ImageUrl,
+            ReleaseDate,
+            DiscontinuedDate,
+            Price                            @mandatory,
+            Height,
+            Width,
+            Depth,
+            Quantity                         @(
+                mandatory,
+                assert.range: [
+                    0,
+                    20
+                ]
+            ),
             UnitOfMeasure as ToUnitOfMeasure @mandatory,
             Currency      as ToCurrency      @mandatory,
             Category      as ToCategory      @mandatory,
@@ -39,7 +44,10 @@ service CatalogService {
             DimensionUnit as ToDimensionUnit,
             SalesData,
             Supplier,
-            Reviews
+            Reviews,
+            Rating,
+            StockAvailability,
+            ToStockAvailibility
         };
 
     @readonly
@@ -148,6 +156,6 @@ service MyService {
             Products.Name = 'Bread';
 };
 
-Service Reports {
+service Reports {
     entity AverageRating as projection on santos.reports.AverageRating;
 };
