@@ -1,7 +1,6 @@
 namespace de.training;
 
-using {
-    cuid, //automatically filled in
+using {cuid, //automatically filled in
 } from '@sap/cds/common';
 
 // ASSOCIAÇÃO Many to Many
@@ -92,3 +91,12 @@ entity Cars {
 // entity ProjParamProducts(pName : String) as projection on Products
 //                                             where
 //                                                 Name = :pName;
+
+entity Orders {
+    key ClientEmail : String(65);
+        FirstName   : String(30);
+        LastName    : String(30);
+        CreatedOn   : Date;
+        Reviewed    : Boolean;
+        Approved    : Boolean;
+};
