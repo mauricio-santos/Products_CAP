@@ -131,4 +131,19 @@ service MyService {
             SalesData.Currency.ID,
             SalesData.Currency.Description
         from santos.materials.Products;
+
+    entity EntityInfix       as //Variante 1 - Mais curta
+        select Supplier[Name = 'Exotic Liquids'].Phone from santos.materials.Products
+        where
+            Products.Name = 'Bread';
+
+    entity EntityJoin        as //Variante 2 - Mais longa
+        select Phone from santos.materials.Products
+        left join santos.sales.Suppliers as supp
+            on(
+                supp.ID = Products.Supplier.ID
+            )
+            and supp.Name = 'Exotic Liquids'
+        where
+            Products.Name = 'Bread';
 };
