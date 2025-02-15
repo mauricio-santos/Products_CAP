@@ -5,7 +5,7 @@ const { Orders } = cds.entities("de.training");
 module.exports = (srv) => {
 
     // %%%%%%%%%%%%% READ %%%%%%%%%%%%%
-    srv.on("READ", "GetOrders", async (request) => {
+    srv.on("READ", "Orders", async (request) => {
 
         if (request.data.ClientEmail !== undefined) { //Filtrando email
             return await SELECT.from`de.training.Orders`
@@ -14,12 +14,12 @@ module.exports = (srv) => {
         return await SELECT.from(Orders);
     });
 
-    srv.after("READ", "GetOrders", (data) => { //Convertendo todos os valores de Reviewed para true
+    srv.after("READ", "Orders", (data) => { //Convertendo todos os valores de Reviewed para true
         return data.map(order => order.Reviewed = true);
     });
 
     // %%%%%%%%%%%%% CREATE %%%%%%%%%%%%%
-    srv.on("CREATE", "CreateOrder", async (req) => {
+    srv.on("CREATE", "Orders", async (req) => {
         const body = {
             ClientEmail : req.data.ClientEmail,
             FirstName : req.data.FirstName,
@@ -50,12 +50,12 @@ module.exports = (srv) => {
         return result;
     });
 
-    srv.before("CREATE", "CreateOrder", (req) => {
+    srv.before("CREATE", "Orders", (req) => {
         return req.data.CreatedOn = new Date().toISOString().slice(0, 10); // YYYY-MM-dd
     });
 
     // %%%%%%%%%%%%% UPDATE %%%%%%%%%%%%%
-    srv.on("UPDATE", "UpdateOrder", (async (req) => {
+    srv.on("UPDATE", "Orders", (async (req) => {
         const ClientEmail = req.data.ClientEmail;
         const newData = {
             FirstName: req.data.FirstName,
@@ -80,7 +80,7 @@ module.exports = (srv) => {
     }));
 
     // %%%%%%%%%%%%% DELETE %%%%%%%%%%%%%
-    srv.on("DELETE", "DeleteOrder", async (req) => {
+    srv.on("DELETE", "Orders", async (req) => {
         const clientEmail = req.data.ClientEmail;
 
         const result = await cds.transaction(req)
