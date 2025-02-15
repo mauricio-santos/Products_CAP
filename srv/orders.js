@@ -101,4 +101,24 @@ module.exports = (srv) => {
             
     });
 
+    // %%%%%%%%%%%%% FUNÇÕES %%%%%%%%%%%%%
+    srv.on("getClientTaxRate", async (req) => {
+        //Não é modificado no lado do servidor
+        const {clientEmail} = req.data;
+        const db = srv.transaction(req);
+        
+        const results = await db.read(Orders, ["Country_code"]).where({ClientEmail: clientEmail});
+
+        console.log(results[0]);
+
+        const countryCode = results[0].Country_code;
+
+        switch (countryCode) {
+            case 'ES': return 21.5;
+            case 'UK': return 24.6;
+            default: return 0;
+        }
+        
+    });
+
 };

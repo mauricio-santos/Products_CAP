@@ -1,6 +1,8 @@
 namespace de.training;
 
-using {cuid, //automatically filled in
+using {
+    cuid,
+    Country //automatically filled in
 } from '@sap/cds/common';
 
 // ASSOCIAÇÃO Many to Many
@@ -99,4 +101,5 @@ entity Orders {
         CreatedOn   : Date;
         Reviewed    : Boolean;
         Approved    : Boolean;
+        Country     : Country;
 };
