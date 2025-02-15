@@ -1,8 +1,13 @@
 const cds = require("@sap/cds");
-const { request } = require("express");
 const { Orders } = cds.entities("de.training");
 
 module.exports = (srv) => {
+
+    // %%%%%%%%%%%%% BEFORE ALL REQUESTS %%%%%%%%%%%%%
+    srv.before("*", (req) => {
+        console.log(`Methods: ${req.method}`);
+        console.log(`Targets: ${req.target}`);
+    });
 
     // %%%%%%%%%%%%% READ %%%%%%%%%%%%%
     srv.on("READ", "Orders", async (request) => {
