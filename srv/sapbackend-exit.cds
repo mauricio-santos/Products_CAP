@@ -8,6 +8,6 @@ service SAPBackendExit {
         skip: false
     }
     @cds.autoexpose //Auto exponhe as associações realacionadas as entidas (caso se aplique. Não é o caso atual)
-    entity Incidents as select from  external.IncidentsSet;
-
+    // entity Incidents as select from  external.IncidentsSet;
+    entity Incidents as projection on external.IncidentsSet;
 }
