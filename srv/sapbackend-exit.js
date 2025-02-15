@@ -26,7 +26,7 @@ module.exports = async (srv) => {
         let incident = await sapbackend.tx(req).send({
             query: incidentsQuery,
             headers: {
-                Authorization: "Basic c2FwdWk1OnNhcHVpNQ=="
+                Authorization: `${process.env.SAP_GATEWAY_AUTH}`
             }
         });
 
