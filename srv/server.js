@@ -12,6 +12,10 @@ cds.on("bootstrap", (app) => {
 });
 
 if (process.env.NODE_ENV !== 'production') {
+    const swagger = require("cds-swagger-ui-express");
+    cds.on("bootstrap", (app) => {
+        app.use(swagger()); // localhost:4004/$api-docs/odata/v4/catalog/#/Products/get_Products
+    });
     require("dotenv").config(); //Disponibiliza dotenv
 }
 
