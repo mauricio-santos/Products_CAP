@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js/graphql": "^0.11.0",
     "@sap-cloud-sdk/http-client": "^3.26.0",
     "@sap-cloud-sdk/resilience": "^3.26.0",
     "@sap/cds": "^8",
@@ -22,6 +23,12 @@
     "start": "cds watch"
   },
   "cds": {
+    "protocols": {
+      "graphql": {
+        "path": "/graphql",
+        "impl": "@cap-js/graphql"
+      }
+    },
     "requires": {
       "sapbackend_metadata": {
         "kind": "odata-v2",

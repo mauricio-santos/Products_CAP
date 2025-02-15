@@ -14,7 +14,14 @@ service SAPBackendExit {
 };
 
 @path: '/rest-service'
-@protocol: 'rest'
+// @protocol: ['rest', 'graphql']
+@protocol: ['rest']
 service RestService {
     entity Incidents as projection on SAPBackendExit.Incidents;
 };
+
+@path: '/graphql'
+@graphql
+service GraphQLService {
+   entity Incidents as select from  external.IncidentsSet;
+}
