@@ -25,3 +25,6 @@ Content-Type: application/json
     "FirstName": "Fred",
     "LastName": "Mercury"
 }
+
+####### UPDATE Orders #######
+DELETE http://localhost:4004/odata/v4/manage-orders/DeleteOrder('client1@client1.com') HTTP/1.1

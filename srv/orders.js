@@ -79,4 +79,26 @@ module.exports = (srv) => {
             });
     }));
 
+    // %%%%%%%%%%%%% DELETE %%%%%%%%%%%%%
+    srv.on("DELETE", "DeleteOrder", async (req) => {
+        const clientEmail = req.data.ClientEmail;
+
+        const result = await cds.transaction(req)
+            .run(DELETE.from(Orders).where({ClientEmail: clientEmail}))
+            .then((resolve, reject) => {
+                console.log("Resolve: ", resolve);
+                console.log("Reject: ", reject);
+
+                if (resolve !== 1) {
+                    req.error(409, "Record Not Found");
+                }
+            })
+            .catch(e => {
+                console.log(e);
+                req.error(e.code, e.message);
+            });
+            console.log("results: ", result);
+            
+    });
+
 };
