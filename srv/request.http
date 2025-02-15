@@ -16,3 +16,12 @@ Content-Type: application/json
     "LastName": "Vieira dos Santos",
     "CreatedOn": "2000-01-01"
 }
+
+####### UPDATE Orders #######
+PUT http://localhost:4004/odata/v4/manage-orders/UpdateOrder('client1@client1.com') HTTP/1.1
+Content-Type: application/json
+
+{
+    "FirstName": "Fred",
+    "LastName": "Mercury"
+}
