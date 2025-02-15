@@ -45,3 +45,6 @@ POST http://localhost:4004/odata/v4/manage-orders/Orders('client1@client1.com')/
 Content-Type: application/json
 
 {"clientEmail" : "client2@client2.com"}
+
+####### GET Incidents #######
+GET http://localhost:4004/odata/v4/sapbackend-exit/Incidents
