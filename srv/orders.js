@@ -106,11 +106,7 @@ module.exports = (srv) => {
         //Não é modificado no lado do servidor
         const {clientEmail} = req.data;
         const db = srv.transaction(req);
-        
         const results = await db.read(Orders, ["Country_code"]).where({ClientEmail: clientEmail});
-
-        console.log(results[0]);
-
         const countryCode = results[0].Country_code;
 
         switch (countryCode) {
@@ -118,7 +114,38 @@ module.exports = (srv) => {
             case 'UK': return 24.6;
             default: return 0;
         }
-        
     });
 
+    // %%%%%%%%%%%%% AÇÕES %%%%%%%%%%%%%
+    // É modificado no lado do servidor
+    srv.on("cancelOrder", async (req) => {
+        const { clientEmail } = req.data;
+        const db = srv.transaction(req);
+        const results = await db
+            .read(Orders, ["FirstName", "LastName", "Approved"])
+            .where({ClientEmail: clientEmail});
+        
+        const returnOrder = {
+            status: "",
+            message: ""
+        };
+
+        console.log(clientEmail);
+        console.log(results);
+        
+        if (!results[0].Approved) {
+            const resultsUpdate = await db.update(Orders)
+                .set({Status: 'C'})
+                .where({ClientEmail: clientEmail});
+            returnOrder.status = "Succeeded";
+            returnOrder.message = `The Order placed by ${results[0].FirstName} ${results[0].LastName} was cancelled!`;
+        }else {
+            returnOrder.status = "Failed";
+            returnOrder.message = `The Order placed by ${results[0].FirstName} ${results[0].LastName} NOT cancelled becouse was already approved`;
+        }
+
+        console.log("Action cancellOrder executed");
+        return returnOrder;
+        
+    });
 };
