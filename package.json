@@ -15,5 +15,13 @@
   },
   "scripts": {
     "start": "cds watch"
+  },
+  "cds": {
+    "requires": {
+      "sapbackend_metadata": {
+        "kind": "odata-v2",
+        "model": "srv/external/sapbackend_metadata"
+      }
+    }
   }
 }
