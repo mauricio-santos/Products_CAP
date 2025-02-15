@@ -1,5 +1,6 @@
 using de.training as training from '../db/training';
 
+@path: '/manage-orders'
 service ManageOrders {
     type cancelOrderReturn {
         status  : String enum {

@@ -1,5 +1,6 @@
 using { sapbackend_metadata as external } from './external/sapbackend_metadata';
 
+@path: '/sapbackend-exit'
 service SAPBackendExit {
 
     //resolver o erro: "Entity "SAPBackendExit.Incidents" is annotated with "@cds.persistence.skip" and cannot be served generically."
@@ -12,6 +13,7 @@ service SAPBackendExit {
     entity Incidents as projection on external.IncidentsSet;
 };
 
+@path: '/rest-service'
 @protocol: 'rest'
 service RestService {
     entity Incidents as projection on SAPBackendExit.Incidents;
