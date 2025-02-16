@@ -98,7 +98,7 @@ annotate service.Products with @(
             Target : '@UI.FieldGroup#GeneratedGroup',
         },
     ],
-    UI.LineItem : [
+    UI.LineItem : [ //Filtros predefinidos
         {
             $Type : 'UI.DataField',
             Label : 'ProductName',
@@ -125,6 +125,11 @@ annotate service.Products with @(
             Value : DiscontinuedDate,
         },
     ],
+    UI.SelectionFields: [ //Compos de Seleção
+        ToCategory_ID,
+        ToCurrency_ID,
+        StockAvailability
+    ]
 );
 
 annotate service.Products with {
