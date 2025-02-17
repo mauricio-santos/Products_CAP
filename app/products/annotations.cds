@@ -290,3 +290,8 @@ annotate service.VH_DimensionUnits {
     Code @(UI: {HiddenFilter: true});
     Text @(UI: {HiddenFilter: true});
 };
+
+annotate service.Products with {
+    ImageUrl @(UI.IsImageURL: true)
+};
+
