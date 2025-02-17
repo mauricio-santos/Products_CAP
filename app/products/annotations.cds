@@ -6,6 +6,11 @@ annotate service.Products with @(
         Data : [
             {
                 $Type: 'UI.DataField',
+                Label: 'ImageUrl',
+                Value: ImageUrl,
+            },
+            {
+                $Type: 'UI.DataField',
                 Label: 'ProductName',
                 Value: ProductName,
             },
@@ -13,11 +18,6 @@ annotate service.Products with @(
                 $Type: 'UI.DataField',
                 Label: 'Description',
                 Value: Description,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'ImageUrl',
-                Value: ImageUrl,
             },
             {
                 $Type: 'UI.DataField',
