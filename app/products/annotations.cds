@@ -109,6 +109,13 @@ annotate service.Products with @(
         }
     ],
 
+    UI.HeaderFacets: [
+        {
+            $Type : 'UI.ReferenceFacet',
+            Target: '@UI.DataPoint#AverageRating'
+        }
+    ],
+
     UI.LineItem                  : [ //Filtros predefinidos
         {
             $Type: 'UI.DataField',
