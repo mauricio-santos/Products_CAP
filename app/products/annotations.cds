@@ -10,8 +10,8 @@ annotate service.Products with @(
     },
 
     UI.HeaderInfo                : {
-        TypeName      : 'Product',
-        TypeNamePlural: 'Products',
+        TypeName      : '{i18n>Product}',
+        TypeNamePlural: '{i18n>Products}',
         ImageUrl      : ImageUrl,
         Title         : {Value: ProductName},
         Description   : {Value: Description}
@@ -22,73 +22,73 @@ annotate service.Products with @(
         Data : [
             {
                 $Type: 'UI.DataField',
-                Label: 'Description',
+                Label: '{i18n>Description}',
                 Value: Description,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'ReleaseDate',
+                Label: '{i18n>ReleaseDate}',
                 Value: ReleaseDate,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'DiscontinuedDate',
+                Label: '{i18n>DiscontinuedDate}',
                 Value: DiscontinuedDate,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Price',
+                Label: '{i18n>Price}',
                 Value: Price,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Height',
+                Label: '{i18n>Height}',
                 Value: Height,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Width',
+                Label: '{i18n>Width}',
                 Value: Width,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Depth',
+                Label: '{i18n>Depth}',
                 Value: Depth,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Quantity',
+                Label: '{i18n>Quantity}',
                 Value: Quantity,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'ToUnitOfMeasure_ID',
+                Label: '{i18n>UnitOfMeasure}',
                 Value: ToUnitOfMeasure_ID,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'ToCurrency_ID',
+                Label: '{i18n>Currency}',
                 Value: ToCurrency_ID,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'ToCategory_ID',
+                Label: '{i18n>CategoryId}',
                 Value: ToCategory_ID,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Category',
+                Label: '{i18n>Category}',
                 Value: Category,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'ToDimensionUnit_ID',
+                Label: '{i18n>DimensionUnitID}',
                 Value: ToDimensionUnit_ID,
             },
             {
                 // $Type: 'UI.DataField',
                 $Type : 'UI.DataFieldForAnnotation',
-                Label : 'Rating',
+                Label : '{i18n>Rating}',
                 // Value: Rating,
                 Target: '@UI.DataPoint#AverageRating'
 
@@ -105,13 +105,13 @@ annotate service.Products with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet',
-            Label : 'General Information',
+            Label : '{i18n>GeneralInformation}',
             Target: '@UI.FieldGroup#GeneratedGroup',
         }, 
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet2',
-            Label : 'General Information - Copy',
+            Label : '{i18n>GeneralInformationCopy}',
             Target: '@UI.FieldGroup#GeneratedGroup',
         }
     ],
@@ -126,50 +126,50 @@ annotate service.Products with @(
     UI.LineItem                  : [ //Filtros predefinidos
         {
             $Type: 'UI.DataField',
-            Label: 'ImageUrl',
+            Label: '{i18n>ImageUrl}',
             Value: ImageUrl,
         },
         {
             $Type: 'UI.DataField',
-            Label: 'ProductName',
+            Label: '{i18n>ProductName}',
             Value: ProductName,
         },
         {
             $Type: 'UI.DataField',
-            Label: 'Description',
+            Label: '{i18n>DescriptionProduct}',
             Value: Description,
         },
         {
             $Type : 'UI.DataFieldForAnnotation',
-            Label : 'Supplier',
+            Label : '{i18n>Supplier}',
             Target: 'Supplier/@Communication.Contact',
         },
         {
             $Type: 'UI.DataField',
-            Label: 'ReleaseDate',
+            Label: '{i18n>ReleaseDate}',
             Value: ReleaseDate,
         },
         {
             $Type: 'UI.DataField',
-            Label: 'DiscontinuedDate',
+            Label: '{i18n>DiscontinuedDate}',
             Value: DiscontinuedDate,
         },
         {
             $Type      : 'UI.DataField',
-            Label      : 'StockAvailability',
+            Label      : '{i18n>StockAvailability}',
             Value      : StockAvailability,
             Criticality: StockAvailability
         },
         {
             // $Type : 'UI.DataField',
             $Type : 'UI.DataFieldForAnnotation',
-            Label : 'Rating',
+            Label : '{i18n>Rating}',
             // Value : Rating,
             Target: '@UI.DataPoint#AverageRating'
         },
         {
             $Type: 'UI.DataField',
-            Label: 'Price',
+            Label: '{i18n>Price}',
             Value: Price,
         },
     ],
@@ -179,6 +179,12 @@ annotate service.Products with @(
         StockAvailability
     ]
 );
+
+annotate service.Products with { // Textos dos campos de filtro
+    ToCategory   @title : '{i18n>CategoryId}';
+    ToCurrency   @title : '{i18n>CurrencyId}';
+    StockAvailability @title : '{i18n>StockAvailability}';
+};
 
 annotate service.Products with {
     Supplier @Common.ValueList: {
@@ -359,7 +365,7 @@ annotate service.Supplier with @(Communication: {Contact: {
 annotate service.Products with @(
     UI.DataPoint #AverageRating: {
         Value: Rating,
-        Title: 'Rating',
+        Title: '{i18n>Rating}',
         TargetValue: 5,
         Visualization: #Rating
     }

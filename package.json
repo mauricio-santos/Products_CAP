@@ -25,10 +25,12 @@
   },
   "scripts": {
     "start": "cds watch",
-    "watch-product": "cds watch --open product/webapp/index.html?sap-ui-xx-viewCache=false",
     "watch-products": "cds watch --open products/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
+    "i18n": {
+      "default_language": "es"
+    },
     "protocols": {
       "graphql": {
         "path": "/graphql",
@@ -48,7 +50,6 @@
     }
   },
   "sapux": [
-    "app/product",
     "app/products"
   ]
 }
