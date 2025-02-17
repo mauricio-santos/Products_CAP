@@ -1,19 +1,18 @@
 using CatalogService as service from '../../srv/catalog-service';
 
 annotate service.Products with @(
+
+    UI.HeaderInfo: {
+        TypeName: 'Product',
+        TypeNamePlural: 'Products',
+        ImageUrl: ImageUrl,
+        Title: {Value: ProductName},
+        Description: {Value: Description}
+    },
+
     UI.FieldGroup #GeneratedGroup: {
         $Type: 'UI.FieldGroupType',
         Data : [
-            {
-                $Type: 'UI.DataField',
-                Label: 'ImageUrl',
-                Value: ImageUrl,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'ProductName',
-                Value: ProductName,
-            },
             {
                 $Type: 'UI.DataField',
                 Label: 'Description',
