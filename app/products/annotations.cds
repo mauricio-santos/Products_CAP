@@ -2,12 +2,12 @@ using CatalogService as service from '../../srv/catalog-service';
 
 annotate service.Products with @(
 
-    UI.HeaderInfo: {
-        TypeName: 'Product',
+    UI.HeaderInfo                : {
+        TypeName      : 'Product',
         TypeNamePlural: 'Products',
-        ImageUrl: ImageUrl,
-        Title: {Value: ProductName},
-        Description: {Value: Description}
+        ImageUrl      : ImageUrl,
+        Title         : {Value: ProductName},
+        Description   : {Value: Description}
     },
 
     UI.FieldGroup #GeneratedGroup: {
@@ -79,9 +79,12 @@ annotate service.Products with @(
                 Value: ToDimensionUnit_ID,
             },
             {
-                $Type: 'UI.DataField',
-                Label: 'Rating',
-                Value: Rating,
+                // $Type: 'UI.DataField',
+                $Type : 'UI.DataFieldForAnnotation',
+                Label : 'Rating',
+                // Value: Rating,
+                Target: '@UI.DataPoint#AverageRating'
+
             },
             {
                 $Type: 'UI.DataField',
@@ -134,9 +137,11 @@ annotate service.Products with @(
             Criticality: StockAvailability
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'Rating',
-            Value: Rating,
+            // $Type : 'UI.DataField',
+            $Type : 'UI.DataFieldForAnnotation',
+            Label : 'Rating',
+            // Value : Rating,
+            Target: '@UI.DataPoint#AverageRating'
         },
         {
             $Type: 'UI.DataField',
@@ -323,3 +328,15 @@ annotate service.Supplier with @(Communication: {Contact: {
         }
     ]
 }});
+
+/**
+* Annotation for Average Rating
+*/
+annotate service.Products with @(
+    UI.DataPoint #AverageRating: {
+        Value: Rating,
+        Title: 'Rating',
+        TargetValue: 5,
+        Visualization: #Rating
+    }
+);
