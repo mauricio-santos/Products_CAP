@@ -2,6 +2,13 @@ using CatalogService as service from '../../srv/catalog-service';
 
 annotate service.Products with @(
 
+    Capabilities: {
+        DeleteRestrictions : { // Ativando/Desativando função de deleção de produtos
+            $Type : 'Capabilities.DeleteRestrictionsType',
+            Deletable: false
+        },
+    },
+
     UI.HeaderInfo                : {
         TypeName      : 'Product',
         TypeNamePlural: 'Products',
