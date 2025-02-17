@@ -100,6 +100,11 @@ annotate service.Products with @(
     UI.LineItem                  : [ //Filtros predefinidos
         {
             $Type: 'UI.DataField',
+            Label: 'ImageUrl',
+            Value: ImageUrl,
+        },
+        {
+            $Type: 'UI.DataField',
             Label: 'ProductName',
             Value: ProductName,
         },
@@ -110,11 +115,6 @@ annotate service.Products with @(
         },
         {
             $Type: 'UI.DataField',
-            Label: 'ImageUrl',
-            Value: ImageUrl,
-        },
-        {
-            $Type: 'UI.DataField',
             Label: 'ReleaseDate',
             Value: ReleaseDate,
         },
@@ -122,6 +122,21 @@ annotate service.Products with @(
             $Type: 'UI.DataField',
             Label: 'DiscontinuedDate',
             Value: DiscontinuedDate,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Stock',
+            Value: StockAvailability,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Rating',
+            Value: Rating,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Price',
+            Value: Price,
         },
     ],
     UI.SelectionFields           : [ //Compos de Seleção
@@ -180,7 +195,7 @@ annotate service.Products with {
                 },
                 {
                     $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: Description,
+                    LocalDataProperty: ToCategory_ID,
                     ValueListProperty: 'Text'
                 }
             ]
@@ -254,7 +269,7 @@ annotate service.VH_Currencies {
 * Annotation for StockAvailability
 */
 annotate service.StockAvailability {
-    ID   @(Common: {Text: {
+    ID @(Common: {Text: {
         $value                : Description,
         ![@UI.TextArrangement]: #TextOnly
     }})
