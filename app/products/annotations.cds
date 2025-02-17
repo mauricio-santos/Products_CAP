@@ -125,8 +125,9 @@ annotate service.Products with @(
         },
         {
             $Type: 'UI.DataField',
-            Label: 'Stock',
+            Label: 'StockAvailability',
             Value: StockAvailability,
+            Criticality: StockAvailability
         },
         {
             $Type: 'UI.DataField',
