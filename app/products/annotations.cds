@@ -114,6 +114,11 @@ annotate service.Products with @(
             Value: Description,
         },
         {
+            $Type : 'UI.DataFieldForAnnotation',
+            Label : 'Supplier',
+            Target: 'Supplier/@Communication.Contact',
+        },
+        {
             $Type: 'UI.DataField',
             Label: 'ReleaseDate',
             Value: ReleaseDate,
@@ -124,9 +129,9 @@ annotate service.Products with @(
             Value: DiscontinuedDate,
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'StockAvailability',
-            Value: StockAvailability,
+            $Type      : 'UI.DataField',
+            Label      : 'StockAvailability',
+            Value      : StockAvailability,
             Criticality: StockAvailability
         },
         {
@@ -296,3 +301,26 @@ annotate service.Products with {
     ImageUrl @(UI.IsImageURL: true)
 };
 
+/**
+* Annotation for Supplier Entity - Communication Contact
+*/
+annotate service.Supplier with @(Communication: {Contact: {
+    $Type: 'Communication.ContactType',
+    fn   : Name,
+    role : 'Supplier Role',
+    photo: 'sap-icon://supplier',
+    email: [{
+        type   : #work,
+        address: Email
+    }, ],
+    tel  : [
+        {
+            type: #work,
+            uri : Phone
+        },
+        {
+            type: #fax,
+            uri : Fax
+        }
+    ]
+}});
