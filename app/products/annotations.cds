@@ -93,12 +93,22 @@ annotate service.Products with @(
             },
         ],
     },
-    UI.Facets                    : [{
-        $Type : 'UI.ReferenceFacet',
-        ID    : 'GeneratedFacet1',
-        Label : 'General Information',
-        Target: '@UI.FieldGroup#GeneratedGroup',
-    }, ],
+
+    UI.Facets                    : [ //Seccions
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet',
+            Label : 'General Information',
+            Target: '@UI.FieldGroup#GeneratedGroup',
+        }, 
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet2',
+            Label : 'General Information - Copy',
+            Target: '@UI.FieldGroup#GeneratedGroup',
+        }
+    ],
+
     UI.LineItem                  : [ //Filtros predefinidos
         {
             $Type: 'UI.DataField',
